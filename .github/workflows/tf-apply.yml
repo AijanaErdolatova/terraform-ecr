@@ -14,24 +14,24 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v2
+      - name: Checkout repository
+        uses: actions/checkout@v2
 
-    - name: Setup Terraform
-      uses: hashicorp/setup-terraform@v1
-      with:
-        terraform_version: 1.6.3
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v1
+        with:
+          terraform_version: 1.6.3
 
-    - name: Terraform formatting
-      run: terraform fmt -check
-      continue-on-error: false
+      - name: Terraform formatting
+        run: terraform fmt -check
+        continue-on-error: false
 
-    - name: Initialize Terraform
-      run: terraform init
+      - name: Initialize Terraform
+        run: terraform init
 
-    - name: Plan Terraform changes
-      run: terraform plan
+      - name: Plan Terraform changes
+        run: terraform plan
 
-    - name: Apply Terraform changes
-      if: success() && github.event_name == 'push' && github.ref == 'refs/heads/main'
-      run: terraform apply -auto-approve
+      - name: Apply Terraform changes
+        if: success() && github.event_name == 'push' && github.ref == 'refs/heads/main'
+        run: terraform apply -auto-approve
